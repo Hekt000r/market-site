@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const port = 5172;
+const port = 5173;
+const path = require("path");
 const cors = require("cors")
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri =
@@ -31,6 +32,17 @@ run().catch(console.dir);
 const myDB = client.db("market-DB")
 
 app.use(cors())
+
+// ---------------------------------------------------------
+// BUILD ONLY STUFF ! (i forgot this last time, now its a pain to re-do everything)
+app.use(express.static(path.join(__dirname, "/dist")));
+
+// client side routing
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "/dist/index.html"));
+  });
+
+
 
 // api endpoints
 app.get("/", (req, res) => {

@@ -16,7 +16,7 @@ function Navbar() {
         <a class="btn btn-ghost text-lg">
           <img alt="Logo" src="https://i.imgur.com/svn4MIM.png" class="w-24" />
         </a>
-        <div class="dropdown dropdown-end sm:hidden flex items-start justify-end">
+        <div class="dropdown dropdown-end md:hidden flex items-start justify-end">
           <div className="flex justify-end items-end">
           <button class="btn btn-circle btn-ghost">
             <FaBars/>
@@ -58,7 +58,7 @@ function Navbar() {
           </ul>
         </div>
 
-        <ul class="hidden menu sm:menu-horizontal gap-2 font-semibold">
+        <ul class="hidden menu md:menu-horizontal gap-2 font-semibold">
           <li className="">
             <input
               type="text"
