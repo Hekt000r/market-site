@@ -88,15 +88,7 @@ function Navbar() {
           <a class="btn btn-sm btn-primary">Log in</a>
         </ul>
 
-        <div class="hidden sm:flex gap-2">
-          <a class="btn btn-circle btn-ghost btn-sm text-xl">
-            <FaFacebook />
-          </a>
-
-          <a class="btn btn-circle btn-ghost btn-sm text-xl">
-            <FaInstagram />
-          </a>
-        </div>
+       
       </nav>
     </div>
   );

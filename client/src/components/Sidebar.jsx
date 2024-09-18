@@ -5,6 +5,7 @@ import ChocolateIcon1 from "../assets/Icons/FilledChocolate1.svg";
 import AppleIcon1 from "../assets/Icons/FilledApple1.svg";
 import CoffeIcon1 from "../assets/Icons/FilledCoffe1.svg";
 import SweetsIcon1 from "../assets/Icons/FilledSweets1.svg";
+import DairyIcon1 from "../assets/Icons/FilledDairy1.svg";
 function Sidebar() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -48,6 +49,11 @@ function Sidebar() {
               )}{" "}
                {category.Name == "Sweets" ? (
                 <img src={SweetsIcon1} className="w-8 m-1 h-8" />
+              ) : (
+                <></>
+              )}{" "}
+               {category.Name == "Dairy" ? (
+                <img src={DairyIcon1} className="w-8 m-1 h-8" />
               ) : (
                 <></>
               )}{" "}
