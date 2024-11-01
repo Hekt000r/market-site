@@ -6,6 +6,8 @@ import logoBadge from "./assets/stkmk-badge.png";
 import { IoMdPricetags } from "react-icons/io";
 import { FaAward } from "react-icons/fa6";
 import { MdSupportAgent } from "react-icons/md";
+import Flyers from "./components/Flyers";
+import Products from "./components/Products";
 function App() {
   return (
     <>
@@ -78,7 +80,25 @@ function App() {
             </div>
           </div>
         </div>
+        <div className="relative xl:h-96 h-[70rem]  bg-cover bg-center p-20 items-center">
+          <div class="absolute inset-0 w-full  bg-opacity-70"></div>
+
+          <div class="relative z-10 p-8 xl:flex items-center justify-between">
+            <div className="w-full xl:w-auto text-center justify-center xl:justify-start mb-8 xl:mb-0">
+              <h1 className="text-black font-semibold text-4xl">Флиери</h1>
+              <p>
+                Откријте ги <b> најдобрите зделки</b>{" "}
+              </p>
+            </div>
+            <Flyers></Flyers>
+           
+          </div>
+        </div>
+        <div className="flex justify-start">
         <Sidebar />
+        <Products/>
+        </div>
+       
       </div>
     </>
   );

@@ -57,7 +57,7 @@ function Sidebar() {
               ) : (
                 <></>
               )}{" "}
-              {category.Name}
+              {category.Display}
             </li>
           </>
         ))}

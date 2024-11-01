@@ -7,10 +7,25 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Flyers from './components/Flyers.jsx'
+import Flyer from './components/Flyer.jsx'
+import AdminPage from './components/adminPage.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
+  },
+  {
+    path: "/flyers",
+    element: <Flyers/>,
+  },
+  {
+    path: "/flyer/:id",
+    element: <Flyer/>,
+  },
+  {
+    path: "/adminPage",
+    element: <AdminPage/>,
   },
 ]);
 

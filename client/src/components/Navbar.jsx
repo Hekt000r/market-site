@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <div className="flex items-center justify-between">
       <nav class="navbar  bg-green-400 flex justify-between">
-        <a class="btn btn-ghost text-lg">
+        <a href="/" class="btn btn-ghost text-lg">
           <img alt="Logo" src="https://i.imgur.com/svn4MIM.png" class="w-24" />
         </a>
         <div class="dropdown dropdown-end md:hidden flex items-start justify-end">

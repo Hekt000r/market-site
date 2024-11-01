@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const port = 5172;
-const cors = require("cors")
+const cors = require("cors");
+const { ObjectId } = require("mongodb");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri =
   "mongodb+srv://hektorzaimidev:AtcyADMzMIT96Qzv@market-db.9xdzr.mongodb.net/?retryWrites=true&w=majority&appName=market-db";
@@ -28,27 +29,75 @@ async function run() {
 }
 run().catch(console.dir);
 
-const myDB = client.db("market-DB")
+const myDB = client.db("market-DB");
 
-app.use(cors())
+app.use(cors());
 
 // api endpoints
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/api/getProducts", async (req,res) => {
+  const productsCollection = myDB.collection("Products");
+  const docs = await productsCollection.find().toArray();
+  res.send(docs);
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
+app.get("/api/getFlyers", async (req, res) => {
+  try {
+    const flyersCollection = myDB.collection("Flyers");
+    const docs = await flyersCollection.find().toArray();
+    console.table(docs);
+    res.send(docs);
+  } catch (err) {
+    console.error("error fetching documents", err);
+    res.status("500").send({ message: "Internal Server Error" });
+  }
+});
+// index.js
+app.get("/api/createProduct", async (req, res) => {
+  try {
+    const productOBJ = JSON.parse(req.query.productOBJ);
+    console.table(productOBJ);
+    
+    const productsCollection = myDB.collection("Products");
+    const result = await productsCollection.insertOne(productOBJ);
+    
+    res.status(201).json({ message: "Product created successfully", id: result.insertedId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error creating product", error: err.message });
+  }
+});
 app.get("/api/getCategories", async (req, res) => {
   try {
-    const categoriesCollection = myDB.collection("Categories")
+    const categoriesCollection = myDB.collection("Categories");
     const docs = await categoriesCollection.find().toArray();
-    console.table(docs)
-    res.send(docs)
-  } catch (err){
-    console.error("error fetching documents", err)
-    res.status("500").send({message: "Internal Server Error"})
+    console.table(docs);
+    res.send(docs);
+  } catch (err) {
+    console.error("error fetching documents", err);
+    res.status("500").send({ message: "Internal Server Error" });
+  }
+});
+app.get("/api/flyer/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const document = await myDB
+      .collection("Flyers")
+      .findOne({ _id: new ObjectId(id) });
+    if (!document) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+    res.json(document);
+  } catch (error) {
+    console.error("error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
