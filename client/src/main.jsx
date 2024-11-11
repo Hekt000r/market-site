@@ -10,6 +10,7 @@ import {
 import Flyers from './components/Flyers.jsx'
 import Flyer from './components/Flyer.jsx'
 import AdminPage from './components/adminPage.jsx'
+import Map from './components/Map.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/adminPage",
     element: <AdminPage/>,
+  },
+  {
+    path: "/locations",
+    element: <Map/>,
   },
 ]);
 
