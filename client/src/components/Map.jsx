@@ -1,24 +1,59 @@
 import React from "react";
-import { MapContainer } from "https://cdn.esm.sh/react-leaflet/MapContainer";
-import { TileLayer } from "https://cdn.esm.sh/react-leaflet/TileLayer";
-import { useMap } from "https://cdn.esm.sh/react-leaflet/hooks";
-// TODO: Map locations
+import { useState } from "react";
+import { MapContainer } from "react-leaflet";
+import { TileLayer, Marker, Popup } from "react-leaflet";
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 function Map() {
+  const [position, setPosition] = useState([42.00736, 20.97548]);
+// 42.006247 20.969977
+
+// TODO: ADD MARKERS FOR FOLLOWING LOCATIONS
+
+// 41.991082, 21.434602
+
+// 41.9949944, 21.3945748
+
+// 41.9954171, 21.5098008
+
+// 41.9993986, 21.4213699
+
+
   return (
-    <div className="map w-[500px] h-[500px]">
-      <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+    <MapContainer center={position} zoom={15.5} style={{ width: '1000px', height: '500px' }}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <Marker position={[42.007797, 20.978490]} >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Marker position={[42.006247, 20.969977]} >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Marker position={[41.991082, 21.434602]} >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Marker position={[41.9949944, 21.3945748]} >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Marker position={[41.9954171, 21.5098008]} >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Marker position={[41.9993986, 21.4213699]} >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+    </MapContainer>
   );
 }
 
