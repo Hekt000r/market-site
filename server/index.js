@@ -38,6 +38,14 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/api/getLocations", async (req,res) => {
+  const locationsCollection = myDB.collection("Locations");
+  const docs = await locationsCollection.find().toArray();
+  res.send(docs);
+})
+
+
+
 app.get("/api/getProducts", async (req,res) => {
   const productsCollection = myDB.collection("Products");
   const docs = await productsCollection.find().toArray();
@@ -101,3 +109,5 @@ app.get("/api/flyer/:id", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
