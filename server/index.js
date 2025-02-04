@@ -109,5 +109,14 @@ app.get("/api/flyer/:id", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+app.get("/api/product/:id", async(req,res) => {
+  const id = req.params.id;
+
+  const product = await myDB.collection("Products").findOne({_id: new ObjectId(id)})
+  if (!product) {
+    return res.status(404).json({message: "Product not found."})
+  }
+  res.json(product)
+})
 
 
