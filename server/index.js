@@ -119,4 +119,23 @@ app.get("/api/product/:id", async(req,res) => {
   res.json(product)
 })
 
+async function migrateDocuments(client) {
+ 
+  const collection = myDB.collection("Products");
 
+  try {
+    await collection.updateMany(
+      {}, // Match all documents
+      [
+        {
+          $set: {
+            tags: ["Product Tag"]
+          },
+        },
+      ]
+    );
+    console.log("Migration completed.");
+  } catch (error) {
+    console.error(error);
+  }
+} // Migration function, used for migrating old documents into new ones

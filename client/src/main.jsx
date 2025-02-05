@@ -12,6 +12,7 @@ import Flyer from './components/Flyer.jsx'
 import AdminPage from './components/adminPage.jsx'
 import Map from './components/Map.jsx'
 import ProductPage from './components/productPage.jsx'
+import AdminLogin from './components/adminLogin.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/product/:id",
     element: <ProductPage/>
+  },
+  {
+    path: "/admin-login-stokomak",
+    element: <AdminLogin/>
   }
 ]);
 
