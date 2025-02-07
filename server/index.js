@@ -38,19 +38,17 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/getLocations", async (req,res) => {
+app.get("/api/getLocations", async (req, res) => {
   const locationsCollection = myDB.collection("Locations");
   const docs = await locationsCollection.find().toArray();
   res.send(docs);
-})
+});
 
-
-
-app.get("/api/getProducts", async (req,res) => {
+app.get("/api/getProducts", async (req, res) => {
   const productsCollection = myDB.collection("Products");
   const docs = await productsCollection.find().toArray();
   res.send(docs);
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
@@ -72,14 +70,18 @@ app.get("/api/createProduct", async (req, res) => {
   try {
     const productOBJ = JSON.parse(req.query.productOBJ);
     console.table(productOBJ);
-    
+
     const productsCollection = myDB.collection("Products");
     const result = await productsCollection.insertOne(productOBJ);
-    
-    res.status(201).json({ message: "Product created successfully", id: result.insertedId });
+
+    res
+      .status(201)
+      .json({ message: "Product created successfully", id: result.insertedId });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error creating product", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error creating product", error: err.message });
   }
 });
 app.get("/api/getCategories", async (req, res) => {
@@ -109,18 +111,97 @@ app.get("/api/flyer/:id", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-app.get("/api/product/:id", async(req,res) => {
+app.get("/api/product/:id", async (req, res) => {
   const id = req.params.id;
 
-  const product = await myDB.collection("Products").findOne({_id: new ObjectId(id)})
+  const product = await myDB
+    .collection("Products")
+    .findOne({ _id: new ObjectId(id) });
   if (!product) {
-    return res.status(404).json({message: "Product not found."})
+    return res.status(404).json({ message: "Product not found." });
   }
-  res.json(product)
+  res.json(product);
+});
+/*
+app.get("/api/register", async (req, res) => {
+  try {
+      // Get parameters from query string
+      const { username, password } = req.query;
+      
+      // Check if required fields exist
+      if (!username || !password) {
+          return res.status(400).json({
+              message: "Username and password are required",
+              success: false
+          });
+      }
+
+      // Check if username already exists
+      const existingUser = await myDB.collection("Admins")
+          .findOne({ username: username });
+          
+      if (existingUser) {
+          return res.status(400).json({
+              message: "Username already exists",
+              success: false
+          });
+      }
+
+      // Create new user
+      await myDB.collection("Admins").insertOne({
+          username,
+          password
+      });
+
+      res.json({
+          message: "User created successfully",
+          success: true
+      });
+  } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).json({
+          message: "Internal server error",
+          success: false
+      });
+  }
+});
+*/
+// Registering, not sure why i did this but i guess its here now, probably should be removed later.
+app.get("/api/login", async (req, res) => {
+  const username = req.query.username;
+  const password = req.query.password;
+  try {
+    // Check if required fields exist
+    if (!username || !password) {
+      return res.status(400).json({
+        message: "Username and password are required",
+        success: false,
+      });
+    }
+    
+    // Check if username and password match to a document in database
+    const authUser = await myDB.collection("Admins").findOne({username: username, password: password})
+    if (authUser) {
+      return res.status(200).json({
+        message: "Successfully authenticated",
+        success: true,
+      });
+    }
+
+    return res.status(400).json({message: "Unable to login, incorrect username or password", success: false})
+  } catch (err) {}
+});
+// ^^^ Authentication, currently in-progress
+
+app.get("/api/edit", async (req, res) => {
+  const documentID = req.query.documentID
+  const dataToEdit = req.query.dataToEdit
+  const dataValue = req.query.dataValue
+  myDB.collection("Products").updateOne({_id: documentID}, {$set: {[dataToEdit]: [dataValue] }})
+  res.status(200).json({message: "edited successfully", dataEdited: dataToEdit, valueSet: dataValue})
 })
 
 async function migrateDocuments(client) {
- 
   const collection = myDB.collection("Products");
 
   try {
@@ -129,7 +210,7 @@ async function migrateDocuments(client) {
       [
         {
           $set: {
-            tags: ["Product Tag"]
+            tags: ["Product Tag"],
           },
         },
       ]
