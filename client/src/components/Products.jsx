@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-function Products() {
-  const [productsList, setProductsList] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/api/getProducts")
-      .then((response) => {
-        setProductsList(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-        alert(error);
-      });
-  }, []);
+function Products({productsList}) {
+ 
   return (
     <div>
       {console.table(productsList[0])}

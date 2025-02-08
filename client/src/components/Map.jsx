@@ -72,7 +72,7 @@ function Map() {
     <MapContainer
       center={position}
       zoom={12}
-      style={{ width: "1000px", height: "500px" }}
+      className="h-[89vh] w-[100vw]"
     >
       <LocationManager locationx={position} />
 

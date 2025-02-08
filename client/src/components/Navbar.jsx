@@ -48,7 +48,7 @@ function Navbar() {
             </a>
           </li>
           <li>
-            <a>
+            <a href="/locations">
               <FaLocationDot color="#dc2626" className="w-6    h-6" />
               Locations
             </a>
@@ -79,7 +79,7 @@ function Navbar() {
             </a>
           </li>
           <li>
-            <a>
+            <a href="/locations">
               <FaLocationDot color="#dc2626" className="w-6    h-6" />
               Locations
             </a>

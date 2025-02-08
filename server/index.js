@@ -122,51 +122,7 @@ app.get("/api/product/:id", async (req, res) => {
   }
   res.json(product);
 });
-/*
-app.get("/api/register", async (req, res) => {
-  try {
-      // Get parameters from query string
-      const { username, password } = req.query;
-      
-      // Check if required fields exist
-      if (!username || !password) {
-          return res.status(400).json({
-              message: "Username and password are required",
-              success: false
-          });
-      }
 
-      // Check if username already exists
-      const existingUser = await myDB.collection("Admins")
-          .findOne({ username: username });
-          
-      if (existingUser) {
-          return res.status(400).json({
-              message: "Username already exists",
-              success: false
-          });
-      }
-
-      // Create new user
-      await myDB.collection("Admins").insertOne({
-          username,
-          password
-      });
-
-      res.json({
-          message: "User created successfully",
-          success: true
-      });
-  } catch (error) {
-      console.error("Error creating user:", error);
-      res.status(500).json({
-          message: "Internal server error",
-          success: false
-      });
-  }
-});
-*/
-// Registering, not sure why i did this but i guess its here now, probably should be removed later.
 app.get("/api/login", async (req, res) => {
   const username = req.query.username;
   const password = req.query.password;
@@ -200,7 +156,28 @@ app.get("/api/edit", async (req, res) => {
   myDB.collection("Products").updateOne({_id: documentID}, {$set: {[dataToEdit]: [dataValue] }})
   res.status(200).json({message: "edited successfully", dataEdited: dataToEdit, valueSet: dataValue})
 })
+app.get("/api/getProductsByTag", async (req, res) => {
+  try {
+      const tag = req.query.tag;
+      
+      if (!tag) {
+          return res.status(400).json({ 
+              error: "Tag parameter is required" 
+          });
+      }
 
+      const products = await myDB.collection("Products")
+          .find({ tags: {"$in" : [tag]} })
+          .toArray();
+
+      res.json(products);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ 
+          error: "Failed to fetch products" 
+      });
+  }
+});
 async function migrateDocuments(client) {
   const collection = myDB.collection("Products");
 
